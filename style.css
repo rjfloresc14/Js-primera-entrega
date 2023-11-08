@@ -3,7 +3,12 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
+    background-color: rgba(0, 0, 0, 0.044);
+    width: 450px;
+    margin: auto;
+    height: 500px;
+    text-align: center;
 }
-button{
+.botones{
     margin-top: 3px;
 }
