@@ -1,45 +1,22 @@
-// Generar un número aleatorio entre 1 y 10
-const randomNumber = Math.floor(Math.random() * 10) + 1;
+function calcularCuota() {
+    var monto = parseFloat(document.getElementById("monto").value);
+    var plazo = parseInt(document.getElementById("plazo").value);
+    var tasa = parseFloat(document.getElementById("tasa").value) / 100;
     
-let attempts = 3;  // Número de intentos permitidos
-
-function checkGuess() {
-    const guessInput = document.getElementById('guessInput');
-    const message = document.getElementById('message');
-    const attemptsSpan = document.getElementById('attempts');
-    
-    const userGuess = parseInt(guessInput.value);
-    
-    if (attempts > 0) {
-        if (userGuess === randomNumber) {
-            message.textContent = '¡Adivinaste! El número era ' + randomNumber;
-            message.style.color = 'green';
-            guessInput.disabled = true;
-        } else if (userGuess < randomNumber) {
-            message.textContent = 'El número es mayor. Intenta de nuevo.';
-            message.style.color = 'red';
-            guessInput.value = '';
-            guessInput.focus();
-            attempts--;
-        } else {
-            message.textContent = 'El número es menor. Intenta de nuevo.';
-            message.style.color = 'red';
-            guessInput.value = '';
-            guessInput.focus();
-            attempts--;
-        }
-        
-        attemptsSpan.textContent = attempts;
-        
-        if (attempts === 0 && userGuess !== randomNumber) {
-            message.textContent = 'Se acabaron los intentos. El número era ' + randomNumber;
-            message.style.color = 'red';
-            guessInput.disabled = true;
-        }
+    if (isNaN(monto) || isNaN(plazo) || isNaN(tasa)) {
+        alert("Por favor, ingrese valores válidos.");
+        return;
     }
+
+    var tasaMensual = tasa / 12;
+    var cuota = monto * (tasaMensual / (1 - Math.pow(1 + tasaMensual, -plazo)));
+    
+    document.getElementById("resultado").innerHTML = "Cuota Mensual: $" + cuota.toFixed(2);
 }
 
-window.onload = function() {
-    const attemptsSpan = document.getElementById('attempts');
-    attemptsSpan.textContent = attempts;
-};
+function limpiarCampos() {
+    document.getElementById("monto").value = "";
+    document.getElementById("plazo").value = "";
+    document.getElementById("tasa").value = "";
+    document.getElementById("resultado").innerHTML = "";
+}
